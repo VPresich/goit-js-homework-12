@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="icon" type="image/svg+xml" href="/goit-js-homework-12/assets/favicon-c9e4afe2.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Module 11 Gallery from server</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/modern-normalize@2.0.0/modern-normalize.min.css"
+    />
+    
+    <script type="module" crossorigin src="/goit-js-homework-12/commonHelpers2.js"></script>
+    <link rel="modulepreload" crossorigin href="/goit-js-homework-12/assets/vendor-9310f15c.js">
+    <link rel="modulepreload" crossorigin href="/goit-js-homework-12/assets/create-msg-af336f06.js">
+    <link rel="stylesheet" href="/goit-js-homework-12/assets/vendor-fd638ea2.css">
+    <link rel="stylesheet" href="/goit-js-homework-12/assets/task-11-1-51e50c55.css">
+    <link rel="stylesheet" href="/goit-js-homework-12/assets/styles-960510b6.css">
+  </head>
+  <body>
+    <header class="header-page">
+  <div class="container">
+    <nav>
+      <ul class="site-navigation">
+        <li class="site-navigation-item">
+          <a class="site-navigation-item-link" href="./index.html">Home</a>
+        </li>
+        <li class="site-navigation-item">
+          <a class="site-navigation-item-link" href="./task-11-1.html"
+            >Gallery && Search</a
+          >
+        </li>
+        <li class="site-navigation-item">
+          <a class="site-navigation-item-link" href="./task-8-1.html"
+            >Gallery with my Window && Slider</a
+          >
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+    <section class="search-form-section">
+  <div class="search-form-container container">
+    <h2 class="search-form-title visually-hidden">Search form</h2>
+
+    <form class="search-form" autocomplete="off">
+      <input
+        type="text"
+        name="search"
+        placeholder="Search images..."
+        autofocus
+      />
+      <button type="submit">Search</button>
+    </form>
+    <span class="border-loader"><span class="loader"></span></span>
+  </div>
+</section>
+
+    <section>
+  <div class="container">
+    <h2 class="section-title visually-hidden">Gallery</h2>
+
+    <ul class="gallery"></ul>
+    <!-- <div class="pagination">
+      <div class="pagination-buttons">
+        <button class="pagination-button" id="prevPageBtn">
+          <svg
+            class="pagination-button-icon-prev"
+            width="26"
+            height="10"
+            aria-label="icon vector left"
+          >
+            <use href="./img/icons/sprite.svg#icon-vector"></use>
+          </svg>
+          <span>Previous page</span>
+        </button>
+        <div class="pagination-dots" id="paginationDots"></div>
+        <button class="pagination-button" id="nextPageBtn">
+          <span>Next page</span>
+          <svg
+            class="pagination-button-icon-next"
+            width="26"
+            height="10"
+            aria-label="icon vector right"
+          >
+            <use href="./img/icons/sprite.svg#icon-vector"></use>
+          </svg>
+        </button>
+      </div>
+    </div> -->
+  </div>
+</section>
+
+
+    
+  </body>
+</html>
