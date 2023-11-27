@@ -1,0 +1,33 @@
+.header-page {
+  background-color: var(--button-accent-bgr-color);
+  border-bottom: 1px solid var(--border-normal-color);
+  box-shadow: 0px 2px 1px rgba(46, 47, 66, 0.08),
+    0px 1px 1px rgba(46, 47, 66, 0.16), 0px 1px 6px rgba(46, 47, 66, 0.08);
+}
+
+.site-navigation {
+  display: flex;
+  column-gap: 40px;
+}
+
+.site-navigation-item {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+}
+
+.site-navigation-item-link {
+  cursor: pointer;
+  color: var(--menu-color);
+  text-decoration: none;
+  display: block;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  transition: color 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.site-navigation-item-link:hover,
+.site-navigation-item-link:focus {
+  color: var(--menu-item-accent);
+}

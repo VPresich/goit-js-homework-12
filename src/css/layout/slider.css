@@ -1,0 +1,114 @@
+.slider-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  gap: 18px;
+}
+
+.slider-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.slider-button {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  height: 30px;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.25;
+  letter-spacing: 0.04em;
+  border-radius: 30px;
+  border: 1px solid var(--body-bgr-color);
+  color: var(--body-bgr-color);
+  background-color: transparent;
+  transition: background-color 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slider-button:hover,
+.slider-button:focus {
+  background-color: var(--button-hover-bgr-color);
+}
+
+.slider-button:disabled {
+  cursor: not-allowed;
+  cursor: not-allowed;
+  border: 1px solid var(--button-disable-color);
+  color: var(--button-disable-color);
+}
+
+.slider-button:disabled:hover {
+  cursor: not-allowed;
+  background-color: transparent;
+  border: 1px solid var(--button-disable-color);
+  color: var(--button-disable-color);
+}
+
+.slider-dots {
+  display: none;
+}
+
+.slider-counter {
+  padding: 6px 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--button-disable-bgr-color);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: 0.04em;
+  border-radius: 10px;
+  border: 1px solid var(--button-disable-bgr-color);
+}
+
+.slider-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  background-color: transparent;
+  margin: 0 4px;
+  border: 1px solid var(--button-color);
+  cursor: pointer;
+  transition: background-color 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slider-dot:hover {
+  background-color: var(--button-hover-bgr-color);
+}
+
+.active-dot {
+  background-color: var(--button-hover-bgr-color);
+}
+#closeBtn {
+  display: none;
+}
+
+@media screen and (min-width: 678px) {
+  .slider-dots {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
+
+  .slider-button {
+    width: 85px;
+  }
+}
+
+@media screen and (min-width: 1112px) {
+  .slider-button {
+    width: 100px;
+    height: 36px;
+  }
+
+  .slider-buttons {
+    gap: 32px;
+  }
+}

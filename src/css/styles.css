@@ -1,0 +1,13 @@
+@import url('./utils/variables.css');
+@import url('./utils/visually-hidden.css');
+
+@import url('./base/common.css');
+@import url('./base/container.css');
+@import url('./layout/header.css');
+@import url('./layout/home.css');
+@import url('./layout/gallery-cards.css');
+@import url('./layout/search-images-form.css');
+@import url('./layout/simple-lightbox-window.css');
+@import url('./layout/modal-window.css');
+@import url('./layout/slider.css');
+@import url('./layout/loader.css');

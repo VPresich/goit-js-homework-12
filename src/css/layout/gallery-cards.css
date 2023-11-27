@@ -1,0 +1,93 @@
+.gallery {
+  width: 100%;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+}
+
+.galery-bgr {
+  background-color: red; /*var(--form-bgr-color); */
+}
+
+.card {
+  width: 360px;
+  border-radius: 4px;
+  padding-bottom: 4px;
+  border: 1px solid var(--input-border-normal-color);
+  transition: border 500ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+}
+
+.card:hover {
+  border: 1px solid var(--input-border-active-color);
+}
+
+.card:hover .card-info {
+  color: var(--input-border-active-color);
+}
+
+.card-cover-inner {
+  height: 200px;
+  position: relative;
+  margin-bottom: 8px;
+}
+
+.card-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-cover-darkened {
+  position: absolute;
+  max-width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--input-active-color);
+  opacity: 0.1;
+  z-index: 1;
+  transition: background-color 500ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+}
+
+.card-cover-darkened:hover {
+  background-color: var(--input-disable-color);
+}
+
+.card-info {
+  color: var(--body-color);
+  display: flex;
+  justify-content: space-around;
+}
+
+.card-info .field {
+  width: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card-info .label {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.card-info .value {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.card-link:hover,
+.card-link:focus {
+  cursor: url('../../img/bxs_hand-down.svg'), auto;
+}
+
+@media screen and (min-width: 768px) {
+}
+
+@media screen and (min-width: 1280px) {
+}

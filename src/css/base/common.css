@@ -1,0 +1,58 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.link {
+  text-decoration: none;
+}
+
+ol,
+ul {
+  list-style-type: none;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+img {
+  display: block;
+}
+
+.modal-toggle {
+  display: none;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  color: var(--body-color);
+  background-color: var(--body-bgr-color);
+}
+
+.section {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.section-title {
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+}
+
+.stop-scrolling {
+  height: 100%;
+  overflow: hidden;
+}
