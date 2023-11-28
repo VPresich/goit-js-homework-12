@@ -117,7 +117,7 @@ function onBackdropClick(event) {
 function refreshOnError(msg) {
   refs.searchForm.search.value = '';
   refs.loader.style.display = 'none';
-  createErrMsg(msg);
+  // createErrMsg(msg);
   console.log(msg);
   refs.gallery.style.backgroundColor = BGR_BODY;
   galleryPagination && galleryPagination.refresh();

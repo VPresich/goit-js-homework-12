@@ -10,15 +10,16 @@ class GalleryPagination extends SliderInterface {
   #maxPages = 0;
   #searchStr = '';
   #loader;
+  #boxRef = null;
 
   constructor({
     data,
-    isLastPage,
     elementsPerPage,
     contentRef,
     fnCreateMarkup,
     fnGetImages,
     searchStr,
+    boxRef,
   }) {
     const dataForSliderInterface = {
       currentSlide: 0,
@@ -40,8 +41,9 @@ class GalleryPagination extends SliderInterface {
     this.#elementsPerPage = elementsPerPage;
     this.#moreBtn = document.getElementById('morePageBtn');
     this.#moreBtn.addEventListener('click', this.onMoreBtnClick.bind(this));
-    (this.#loader = document.querySelector('.border-loader-pagination')),
-      (this.#searchStr = searchStr);
+    this.#loader = document.querySelector('.border-loader-pagination');
+    this.#searchStr = searchStr;
+    this.#boxRef = boxRef;
     this.update();
     this.moreBtnUpdate();
   }
@@ -68,6 +70,7 @@ class GalleryPagination extends SliderInterface {
       startElement + this.#elementsPerPage
     );
     this.#fnUpdateMarkUp(elements, this.#ContentRef);
+    this.#boxRef && this.#boxRef.refresh();
   }
 
   addData(newPageData, maxPages, searchStr) {
@@ -86,10 +89,13 @@ class GalleryPagination extends SliderInterface {
       .then(images => {
         this.addData(images.hits, this.#maxPages, this.#searchStr);
         this.#loader.style.display = 'none';
+        this.#boxRef && this.#boxRef.refresh();
       })
       .catch(error => {
         console.log(error);
         this.#loader.style.display = 'none';
+        this.#boxRef && this.#boxRef.refresh();
+        this.refresh();
       });
   }
 }

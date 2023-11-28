@@ -1,21 +1,25 @@
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
-import insertCardsToGallery from '../common/insert-cards-to-gallery.js';
 import '../../css/layout/simple-lightbox-window.css';
 import iconsUrl from '../../img/icons.svg';
 
-import createCardsGallery from '../common/create-cards-gallery.js'; //For callbacks
-import getImages from '../common/get-images.js'; //For promises
+import createCardsGallery from '../common/create-cards-gallery.js';
+import getImages from '../common/get-images.js';
 import { createErrMsg } from '../common/create-msg.js';
 
 import { BGR_GALLERY, BGR_BODY } from '../common/constants.js';
+
+import GalleryPagination from '../common/gallery-pagination.js';
 
 const galleryRef = document.querySelector('.gallery');
 const loaderRef = document.querySelector('.border-loader');
 const searchForm = document.querySelector('.search-form');
 
 searchForm.addEventListener('submit', onSearchFormSubmit);
+
+let searchString = '';
+const defaultElementsPerPage = 20;
 
 let slBox = new SimpleLightbox('.gallery a', {
   captionsData: 'alt',
@@ -41,26 +45,22 @@ let slBox = new SimpleLightbox('.gallery a', {
   loop: true,
 });
 
-// 1) With callbacks (Create gallery from server data)================================
-// function onSearchFormSubmit(event) {
-//   event.preventDefault();
-//   try {
-//     loaderRef.style.display = 'block';
-//     const searchStr = event.currentTarget.search.value.trim();
-//     insertCardsToGallery(searchStr, refreshOnSuccess, refreshOnError);
-//   } catch (error) {
-//     console.error('Error:', error);
-//     loaderRef.style.display = 'none';
-//   }
-// }
+const galleryPagination = new GalleryPagination({
+  data: [],
+  fnCreateMarkup: createCardsGallery,
+  fnGetImages: getImages,
+  contentRef: galleryRef,
+  elementsPerPage: defaultElementsPerPage,
+  searchStr: searchString,
+  boxRef: slBox,
+});
 
-// 2) With promises (Get data from server) ============================================
 function onSearchFormSubmit(event) {
   event.preventDefault();
 
   loaderRef.style.display = 'block';
-  const searchStr = event.currentTarget.search.value.trim();
-  getImages(searchStr)
+  searchString = event.currentTarget.search.value.trim();
+  getImages(searchString, 1)
     .then(data => refreshOnSuccess(data))
     .catch(msg => refreshOnError(msg));
 }
@@ -71,13 +71,17 @@ function refreshOnError(msg) {
   createErrMsg(msg);
   galleryRef.style.backgroundColor = BGR_BODY;
   galleryRef.innerHTML = '';
-  slBox.refresh();
+  galleryPagination && galleryPagination.refresh();
+  slBox && slBox.refresh();
 }
 
 function refreshOnSuccess(data) {
   searchForm.search.value = '';
   loaderRef.style.display = 'none';
   galleryRef.style.backgroundColor = BGR_GALLERY;
-  createCardsGallery(data.hits, galleryRef);
-  slBox.refresh();
+
+  galleryPagination && galleryPagination.refresh();
+  const maxPages = Math.ceil(data.totalHits / defaultElementsPerPage);
+  galleryPagination.addData(data.hits, maxPages, searchString);
+  slBox && slBox.refresh();
 }
