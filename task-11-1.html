@@ -18,8 +18,8 @@
     />
     
     <script type="module" crossorigin src="/goit-js-homework-12/commonHelpers2.js"></script>
+    <link rel="modulepreload" crossorigin href="/goit-js-homework-12/assets/gallery-pagination-58072343.js">
     <link rel="modulepreload" crossorigin href="/goit-js-homework-12/assets/vendor-9310f15c.js">
-    <link rel="modulepreload" crossorigin href="/goit-js-homework-12/assets/create-msg-a088259a.js">
     <link rel="stylesheet" href="/goit-js-homework-12/assets/vendor-fd638ea2.css">
     <link rel="stylesheet" href="/goit-js-homework-12/assets/task-11-1-51e50c55.css">
     <link rel="stylesheet" href="/goit-js-homework-12/assets/styles-08de9255.css">
@@ -69,6 +69,50 @@
     <h2 class="section-title visually-hidden">Gallery</h2>
 
     <ul class="gallery"></ul>
+  </div>
+</section>
+
+    <section class="pagination-section">
+  <div class="container">
+    <div class="pagination">
+      <div class="pagination-buttons">
+        <button class="pagination-button" id="prevPageBtn">
+          <svg
+            class="pagination-button-icon-prev"
+            width="26"
+            height="10"
+            aria-label="icon vector left"
+          >
+            <use href="/goit-js-homework-12/assets/icons-5e8cbe24.svg#icon-vector"></use>
+          </svg>
+          <span>Previous</span>
+        </button>
+        <ul class="pagination-dots list" id="paginationDots"></ul>
+        <button class="pagination-button" id="nextPageBtn">
+          <span>Next</span>
+          <svg
+            class="pagination-button-icon-next"
+            width="26"
+            height="10"
+            aria-label="icon vector right"
+          >
+            <use href="/goit-js-homework-12/assets/icons-5e8cbe24.svg#icon-vector"></use>
+          </svg>
+        </button>
+        <button class="pagination-button" id="morePageBtn">
+          <span>More</span>
+          <svg
+            class="pagination-button-icon-more"
+            width="26"
+            height="10"
+            aria-label="icon vector right"
+          >
+            <use href="/goit-js-homework-12/assets/icons-5e8cbe24.svg#icon-navigation-more"></use>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <span class="border-loader-pagination"><span class="loader"></span></span>
   </div>
 </section>
 
