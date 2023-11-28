@@ -18,10 +18,10 @@
     />
     
     <script type="module" crossorigin src="/goit-js-homework-12/commonHelpers3.js"></script>
+    <link rel="modulepreload" crossorigin href="/goit-js-homework-12/assets/get-images-18c7ea61.js">
     <link rel="modulepreload" crossorigin href="/goit-js-homework-12/assets/vendor-9310f15c.js">
-    <link rel="modulepreload" crossorigin href="/goit-js-homework-12/assets/create-msg-af336f06.js">
     <link rel="stylesheet" href="/goit-js-homework-12/assets/vendor-fd638ea2.css">
-    <link rel="stylesheet" href="/goit-js-homework-12/assets/styles-960510b6.css">
+    <link rel="stylesheet" href="/goit-js-homework-12/assets/styles-08de9255.css">
   </head>
   <body>
     <header class="header-page">
@@ -68,33 +68,6 @@
     <h2 class="section-title visually-hidden">Gallery</h2>
 
     <ul class="gallery"></ul>
-    <!-- <div class="pagination">
-      <div class="pagination-buttons">
-        <button class="pagination-button" id="prevPageBtn">
-          <svg
-            class="pagination-button-icon-prev"
-            width="26"
-            height="10"
-            aria-label="icon vector left"
-          >
-            <use href="./img/icons/sprite.svg#icon-vector"></use>
-          </svg>
-          <span>Previous page</span>
-        </button>
-        <div class="pagination-dots" id="paginationDots"></div>
-        <button class="pagination-button" id="nextPageBtn">
-          <span>Next page</span>
-          <svg
-            class="pagination-button-icon-next"
-            width="26"
-            height="10"
-            aria-label="icon vector right"
-          >
-            <use href="./img/icons/sprite.svg#icon-vector"></use>
-          </svg>
-        </button>
-      </div>
-    </div> -->
   </div>
 </section>
 
@@ -103,14 +76,14 @@
   <div class="modal-window">
     <button class="close-button" type="button" id="id-close-button">
       <svg class="close-icon" width="16" height="16">
-        <use href="/goit-js-homework-12/assets/icons-f810c139.svg#close-form"></use>
+        <use href="/goit-js-homework-12/assets/icons-5e8cbe24.svg#close-form"></use>
       </svg>
     </button>
     <img class="modal-content" id="ModalContent" src="" alt="" />
 
     <div class="slider-buttons">
       <button class="slider-button" id="prevBtn">Previous</button>
-      <div class="slider-dots" id="sliderDots"></div>
+      <ul class="slider-dots list" id="sliderDots"></ul>
       <span class="slider-counter" id="slidesCounter"></span>
       <button class="slider-button" id="nextBtn">Next</button>
       <button class="slider-button" id="closeBtn">Close</button>
@@ -118,6 +91,50 @@
   </div>
 </div>
 <!-- ===================Modal backdrop =========================-->
+
+    <section class="pagination-section">
+  <div class="container">
+    <div class="pagination">
+      <div class="pagination-buttons">
+        <button class="pagination-button" id="prevPageBtn">
+          <svg
+            class="pagination-button-icon-prev"
+            width="26"
+            height="10"
+            aria-label="icon vector left"
+          >
+            <use href="../img/icons.svg#icon-vector"></use>
+          </svg>
+          <span>Previous</span>
+        </button>
+        <ul class="pagination-dots list" id="paginationDots"></ul>
+        <button class="pagination-button" id="nextPageBtn">
+          <span>Next</span>
+          <svg
+            class="pagination-button-icon-next"
+            width="26"
+            height="10"
+            aria-label="icon vector right"
+          >
+            <use href="../img/icons.svg#icon-vector"></use>
+          </svg>
+        </button>
+        <button class="pagination-button" id="morePageBtn">
+          <span>More</span>
+          <svg
+            class="pagination-button-icon-more"
+            width="26"
+            height="10"
+            aria-label="icon vector right"
+          >
+            <use href="../img/icons.svg#icon-navigation-more"></use>
+          </svg>
+        </button>
+      </div>
+    </div>
+     <span class="border-loader-pagination"><span class="loader"></span></span>
+  </div>
+</section>
 
 
     
