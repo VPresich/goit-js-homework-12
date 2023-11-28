@@ -67,7 +67,7 @@ class SliderInterface {
   refresh() {
     this.#sliderRef.refresh();
     if (this.#slidesCounter) this.#slidesCounter.textContent = '';
-    if (this.#sliderDots) this.#sliderDots.innerHTML = '';
+    if (this.#sliderDots.innerHTML) this.#sliderDots.innerHTML = '';
   }
 
   destroy() {

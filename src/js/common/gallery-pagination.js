@@ -1,4 +1,5 @@
 import SliderInterface from './slider-interface.js';
+import { createErrMsg } from '../common/create-msg.js';
 
 class GalleryPagination extends SliderInterface {
   #elementsPerPage = 20;
@@ -85,17 +86,19 @@ class GalleryPagination extends SliderInterface {
     const nextPage = this.getSlidesNumber() + 1;
 
     this.#loader.style.display = 'block';
+    this.#moreBtn.style.visible = 'none';
     this.#fnGetImages(this.#searchStr, nextPage)
       .then(images => {
         this.addData(images.hits, this.#maxPages, this.#searchStr);
-        this.#loader.style.display = 'none';
-        this.#boxRef && this.#boxRef.refresh();
       })
       .catch(error => {
-        console.log(error);
+        createErrMsg(error);
+        this.refresh();
+      })
+      .finally(() => {
         this.#loader.style.display = 'none';
         this.#boxRef && this.#boxRef.refresh();
-        this.refresh();
+        this.#moreBtn.style.visible = 'flex';
       });
   }
 }

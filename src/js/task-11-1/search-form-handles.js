@@ -62,24 +62,23 @@ function onSearchFormSubmit(event) {
   searchString = event.currentTarget.search.value.trim();
   getImages(searchString, 1)
     .then(data => refreshOnSuccess(data))
-    .catch(msg => refreshOnError(msg));
+    .catch(msg => refreshOnError(msg))
+    .finally(() => {
+      searchForm.search.value = '';
+      loaderRef.style.display = 'none';
+    });
 }
 
 function refreshOnError(msg) {
-  searchForm.search.value = '';
-  loaderRef.style.display = 'none';
-  createErrMsg(msg);
   galleryRef.style.backgroundColor = BGR_BODY;
+  createErrMsg(msg);
   galleryRef.innerHTML = '';
   galleryPagination && galleryPagination.refresh();
   slBox && slBox.refresh();
 }
 
 function refreshOnSuccess(data) {
-  searchForm.search.value = '';
-  loaderRef.style.display = 'none';
   galleryRef.style.backgroundColor = BGR_GALLERY;
-
   galleryPagination && galleryPagination.refresh();
   const maxPages = Math.ceil(data.totalHits / defaultElementsPerPage);
   galleryPagination.addData(data.hits, maxPages, searchString);
