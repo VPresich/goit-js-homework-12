@@ -1,4 +1,4 @@
-import Slider from "./slider.js";
+import Slider from './slider.js';
 
 class SliderInterface {
   static touchThreshold = 75;
@@ -18,18 +18,18 @@ class SliderInterface {
     slidesPerPage,
     prevBtnId,
     nextBtnId,
-    dotsContainerId = "",
-    sliderContainerId = "",
-    slidesCounterId = "",
-    dotDefaultClass = "slider-dot",
-    dotActiveClass = "active-dot",
+    dotsContainerId = '',
+    sliderContainerId = '',
+    slidesCounterId = '',
+    dotDefaultClass = 'slider-dot',
+    dotActiveClass = 'active-dot',
     isDotContainText = false,
-    elementsList,
+    elementsListLength,
   }) {
     this.#sliderRef = new Slider(
       currentSlide,
       slidesPerPage,
-      elementsList.length
+      elementsListLength
     );
 
     if (prevBtnId) this.#prevBtn = document.getElementById(prevBtnId);
@@ -60,8 +60,14 @@ class SliderInterface {
   update() {
     this.updateContent();
     this.updateButtons();
-    this.updateDisplayDots();
-    this.updateCounter();
+    this.#sliderDots && this.updateDisplayDots();
+    this.#slidesCounter && this.updateCounter();
+  }
+
+  refresh() {
+    this.#sliderRef.refresh();
+    if (this.#slidesCounter) this.#slidesCounter.textContent = '';
+    if (this.#sliderDots) this.#sliderDots.innerHTML = '';
   }
 
   destroy() {
@@ -74,30 +80,34 @@ class SliderInterface {
     return this.#sliderRef.currentSlide;
   }
 
+  getSlidesNumber() {
+    return this.#sliderRef.slidesNumber;
+  }
+
   initBtnsFunction() {
     this.#prevBtn &&
-      this.#prevBtn.addEventListener("click", this.onPrevBtnClick.bind(this));
+      this.#prevBtn.addEventListener('click', this.onPrevBtnClick.bind(this));
     this.#nextBtn &&
-      this.#nextBtn.addEventListener("click", this.onNextBtnClick.bind(this));
+      this.#nextBtn.addEventListener('click', this.onNextBtnClick.bind(this));
   }
 
   initTouchFunction() {
     this.#touchStartX = 0;
     this.#sliderContent.addEventListener(
-      "touchstart",
+      'touchstart',
       this.onSliderTouchStart.bind(this)
     );
 
     this.#sliderContent.addEventListener(
-      "touchmove",
+      'touchmove',
       this.onSliderTouchMove.bind(this)
     );
   }
 
   createDots() {
-    this.#sliderDots.innerHTML = "";
+    this.#sliderDots.innerHTML = '';
     for (let ind = 0; ind < this.#sliderRef.slidesNumber; ind += 1) {
-      const dot = document.createElement("div");
+      const dot = document.createElement('li');
       dot.className = this.#dotDefaultClass;
       dot.dataset.index = ind;
       if (this.#isDotContainText) dot.textContent = `${ind + 1}`;
@@ -105,7 +115,7 @@ class SliderInterface {
     }
 
     this.#sliderDots.addEventListener(
-      "click",
+      'click',
       this.onSliderDotsClick.bind(this)
     );
   }
@@ -117,6 +127,10 @@ class SliderInterface {
   updateButtons() {
     this.#prevBtn.disabled = this.#sliderRef.isExistPrev();
     this.#nextBtn.disabled = this.#sliderRef.isExistNext();
+    this.#prevBtn.style.display =
+      this.#sliderRef.slidesNumber > 0 ? 'flex' : 'none';
+    this.#nextBtn.style.display =
+      this.#sliderRef.slidesNumber > 0 ? 'flex' : 'none';
   }
 
   updateDisplayDots() {
@@ -124,47 +138,51 @@ class SliderInterface {
     for (let i = 0; i < children.length; i += 1) {
       if (i === this.#sliderRef.currentSlide) {
         children[i].classList.add(this.#dotActiveClass);
+        children[i].style.display = 'flex';
+        console.log('qqq');
       } else {
         children[i].classList.remove(this.#dotActiveClass);
+        console.log('qqq1');
+        children[i].style.display = window.innerWidth <= 375 ? 'none' : '';
       }
     }
   }
 
   updateCounter() {
     this.#slidesCounter.textContent = `${
-      this.#sliderRef.currentSlide + 1 + "/" + this.#sliderRef.slidesNumber
+      this.#sliderRef.currentSlide + 1 + '/' + this.#sliderRef.slidesNumber
     }`;
   }
 
   removeBtnsFunction() {
     this.#prevBtn &&
       this.#prevBtn.removeEventListener(
-        "click",
+        'click',
         this.onPrevBtnClick.bind(this)
       );
     this.#nextBtn &&
       this.#nextBtn.removeEventListener(
-        "click",
+        'click',
         this.onNextBtnClick.bind(this)
       );
   }
 
   removeDots() {
-    this.#sliderDots.innerHTML = "";
+    this.#sliderDots.innerHTML = '';
     this.#sliderDots.removeEventListener(
-      "click",
+      'click',
       this.onSliderDotsClick.bind(this)
     );
   }
 
   removeTouchFunction() {
     this.#sliderContent.removeEventListener(
-      "touchstart",
+      'touchstart',
       this.onSliderTouchStart.bind(this)
     );
 
     this.#sliderContent.removeEventListener(
-      "touchmove",
+      'touchmove',
       this.onSliderTouchMove.bind(this)
     );
   }
@@ -207,6 +225,23 @@ class SliderInterface {
         this.update();
       }
     }
+  }
+
+  addDot() {
+    const dot = document.createElement('li');
+    dot.className = this.#dotDefaultClass;
+    const currIndex = this.getSlidesNumber();
+    dot.dataset.index = currIndex;
+    if (this.#isDotContainText) dot.textContent = `${currIndex + 1}`;
+    this.#sliderDots.appendChild(dot);
+  }
+
+  addNewPage() {
+    this.addDot();
+    const lastSlider = this.#sliderRef.slidesNumber + 1;
+    this.#sliderRef.slidesNumber = lastSlider;
+    this.#sliderRef.goToSlide(lastSlider - 1);
+    this.update();
   }
 }
 

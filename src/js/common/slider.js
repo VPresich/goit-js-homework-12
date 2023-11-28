@@ -38,6 +38,12 @@ class Slider {
     return (this.#slidesNumber = newSlidesNumber);
   }
 
+  refresh() {
+    this.#currentSlide = 0;
+    this.#slidesNumber = 0;
+    this.#slides = [];
+  }
+
   setSlidesProperty() {
     this.#slides.forEach((slide, index) => {
       if (
@@ -75,7 +81,7 @@ class Slider {
     const delta = index - this.#currentSlide;
     if (index <= this.#slidesNumber - this.#slidesPerPage) {
       this.#currentSlide += delta;
-      this.#slides.forEach((slide) => {
+      this.#slides.forEach(slide => {
         slide.offset -= delta;
       });
     }

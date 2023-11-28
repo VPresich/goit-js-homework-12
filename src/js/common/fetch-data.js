@@ -1,10 +1,4 @@
-async function fetchData(url, apiKey) {
-  const options = {
-    headers: {
-      'Content-Type': 'application/json',
-      'X-API-KEY': apiKey,
-    },
-  };
+function fetchData(url) {
   return new Promise((resolve, reject) => {
     fetch(url)
       .then(response => {
@@ -13,9 +7,7 @@ async function fetchData(url, apiKey) {
         }
         resolve(response.json());
       })
-      .catch(error => {
-        reject(error);
-      });
+      .catch(error => reject(error));
   });
 }
 

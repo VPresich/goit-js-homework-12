@@ -1,14 +1,16 @@
-.border-loader {
+.border-loader,
+.border-loader-pagination {
   width: 372px;
   height: 12px;
   position: absolute;
   left: 50%;
   bottom: 16px;
   transform: translate(-50%, 0%);
+  display: none;
 }
 
 .loader {
-  display: none;
+  display: block;
   height: 12px;
   width: 372px;
   border: 1px solid var(--button-color);

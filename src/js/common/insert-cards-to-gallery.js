@@ -16,7 +16,7 @@ async function insertCardsToGallery(strForSearch, onSuccess, onError) {
 
   const url = `${API_URL}?${new URLSearchParams(apiParams).toString()}`;
 
-  fetchData(url, API_KEY)
+  fetchData(url)
     .then(data => {
       if (!data.hits.length) {
         onError &&

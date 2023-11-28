@@ -12,7 +12,7 @@ import { createErrMsg } from '../common/create-msg.js';
 import { BGR_GALLERY, BGR_BODY } from '../common/constants.js';
 
 const galleryRef = document.querySelector('.gallery');
-const loaderRef = document.querySelector('.loader');
+const loaderRef = document.querySelector('.border-loader');
 const searchForm = document.querySelector('.search-form');
 
 searchForm.addEventListener('submit', onSearchFormSubmit);
@@ -58,16 +58,11 @@ let slBox = new SimpleLightbox('.gallery a', {
 function onSearchFormSubmit(event) {
   event.preventDefault();
 
-  try {
-    loaderRef.style.display = 'block';
-    const searchStr = event.currentTarget.search.value.trim();
-    getImages(searchStr)
-      .then(data => refreshOnSuccess(data))
-      .catch(msg => refreshOnError(msg));
-  } catch (error) {
-    console.error('Unknown Error:', error);
-    loaderRef.style.display = 'none';
-  }
+  loaderRef.style.display = 'block';
+  const searchStr = event.currentTarget.search.value.trim();
+  getImages(searchStr)
+    .then(data => refreshOnSuccess(data))
+    .catch(msg => refreshOnError(msg));
 }
 
 function refreshOnError(msg) {
@@ -83,6 +78,6 @@ function refreshOnSuccess(data) {
   searchForm.search.value = '';
   loaderRef.style.display = 'none';
   galleryRef.style.backgroundColor = BGR_GALLERY;
-  createCardsGallery(data, galleryRef);
+  createCardsGallery(data.hits, galleryRef);
   slBox.refresh();
 }

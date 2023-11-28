@@ -1,25 +1,29 @@
 import SliderInterface from './slider-interface.js';
 
 class GalleryPagination extends SliderInterface {
-  #elementsPerPage = 8;
-  #isRequestNeed;
+  #elementsPerPage = 20;
   #data;
   #fnUpdateMarkUp;
   #ContentRef;
-  #fnInsertDataToGallary;
+  #fnGetImages;
+  #moreBtn;
+  #maxPages = 1;
+  #searchStr = '';
+  #loader;
+
   constructor({
     data,
-    totalPages,
+    isLastPage,
     elementsPerPage,
     contentRef,
-    isRequestNeed,
     fnCreateMarkup,
-    fnInsertDataToGallary,
+    fnGetImages,
+    searchStr,
   }) {
     const dataForSliderInterface = {
-      indexElement: 0,
+      currentSlide: 0,
       slidesPerPage: 1,
-      elementsListLength: totalPages,
+      elementsListLength: 0,
       prevBtnId: 'prevPageBtn',
       nextBtnId: 'nextPageBtn',
       dotsContainerId: 'paginationDots',
@@ -29,33 +33,69 @@ class GalleryPagination extends SliderInterface {
       sliderContainerId: '',
     };
     super(dataForSliderInterface);
-
     this.#data = data;
     this.#fnUpdateMarkUp = fnCreateMarkup;
-    this.#fnInsertDataToGallary = fnInsertDataToGallary;
+    this.#fnGetImages = fnGetImages;
     this.#ContentRef = contentRef;
-    this.#isRequestNeed = isRequestNeed;
     this.#elementsPerPage = elementsPerPage;
+    this.#maxPages = 1;
+    this.#moreBtn = document.getElementById('morePageBtn');
+    this.#moreBtn.addEventListener('click', this.onMoreBtnClick.bind(this));
+    (this.#loader = document.querySelector('.border-loader-pagination')),
+      (this.#searchStr = searchStr);
+    this.update();
+  }
 
-    super.update();
+  moreBtnUpdate() {
+    this.#moreBtn.style.display = this.#data.length > 0 ? 'block' : 'none';
+    console.log('moreBtnUpdate');
+    console.log(this.getSlidesNumber());
+    console.log(this.#maxPages);
+    this.#moreBtn.disabled = this.getSlidesNumber() === this.#maxPages;
+  }
+
+  refresh() {
+    super.refresh();
+    this.#searchStr = '';
+    this.#data = [];
+    this.update();
+    this.#ContentRef.innerHTML = '';
+    this.moreBtnUpdate();
   }
 
   updateContent() {
     const slideNumber = super.getCurrentSlide();
+    const startElement = slideNumber * this.#elementsPerPage;
+    const elements = this.#data.slice(
+      startElement,
+      startElement + this.#elementsPerPage
+    );
+    this.#fnUpdateMarkUp(elements, this.#ContentRef);
+  }
 
-    if (this.#isRequestNeed) {
-      this.#fnInsertDataToGallary(slideNumber + 1);
-    } else {
-      const startElement = slideNumber * this.#elementsPerPage;
-      const elements = this.#data.slice(
-        startElement,
-        startElement + this.#elementsPerPage
-      );
-      console.log();
-      this.#ContentRef.innerHTML = '';
-      const elementsMarkup = this.#fnUpdateMarkUp(elements);
-      this.#ContentRef.insertAdjacentHTML('beforeend', elementsMarkup);
-    }
+  addData(newPageData, maxPages, searchStr) {
+    this.#data.push(...newPageData);
+    this.#searchStr = searchStr;
+    this.#maxPages = maxPages;
+    super.addNewPage();
+    this.moreBtnUpdate();
+
+    console.log('this.#maxPages', this.#maxPages);
+  }
+
+  onMoreBtnClick() {
+    const nextPage = this.getSlidesNumber() + 1;
+
+    this.#loader.style.display = 'block';
+    this.#fnGetImages(this.#searchStr, nextPage)
+      .then(images => {
+        this.addData(images.hits, this.#maxPages, this.#searchStr);
+        refs.loader.style.display = 'none';
+      })
+      .catch(error => {
+        console.log(error);
+        this.#loader.style.display = 'none';
+      });
   }
 }
 

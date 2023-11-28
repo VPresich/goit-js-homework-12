@@ -9,13 +9,18 @@ import getImages from '../common/get-images.js'; // For promise
 import { createErrMsg } from '../common/create-msg.js';
 import { BGR_GALLERY, BGR_BODY } from '../common/constants.js';
 
+import GalleryPagination from '../common/gallery-pagination.js';
+
+let searchString = '';
+const defaultElementsPerPage = 20;
+
 const refs = {
   gallery: document.querySelector('.gallery'),
   modalBackdrop: document.querySelector('.modal-backdrop'),
   buttonClose: document.querySelector('.close-button'),
   modalContent: document.querySelector('.modal-content'),
   modalClose: document.querySelector('#closeBtn'),
-  loader: document.querySelector('.loader'),
+  loader: document.querySelector('.border-loader'),
   searchForm: document.querySelector('.search-form'),
 };
 
@@ -24,6 +29,16 @@ refs.buttonClose.addEventListener('click', onCloseModalWindow);
 refs.modalBackdrop.addEventListener('click', onBackdropClick);
 refs.modalClose.addEventListener('click', onCloseModalWindow);
 refs.searchForm.addEventListener('submit', onSearchFormSubmit);
+
+const galleryPagination = new GalleryPagination({
+  data: [],
+  fnCreateMarkup: createCardsGallery,
+  fnGetImages: getImages,
+  isLastPage: false,
+  contentRef: refs.gallery,
+  elementsPerPage: 20,
+  searchStr: searchString,
+});
 
 let modalWindowSlider;
 const dataForSlider = {
@@ -59,6 +74,7 @@ function onGalleryImageClick(event) {
     ...dataForSlider,
     currentSlide: indexList,
     elementsList: listImages,
+    elementsListLength: listImages.length,
   });
 
   openModalWindow();
@@ -66,19 +82,16 @@ function onGalleryImageClick(event) {
 
 function onSearchFormSubmit(event) {
   event.preventDefault();
-  try {
-    const searchStr = event.currentTarget.search.value.trim();
-    refs.loader.style.display = 'block';
-    getImages(searchStr)
-      .then(images => {
-        refreshOnSuccess(images);
-      })
-      .catch(error => {
-        refreshOnError(error);
-      });
-  } catch (error) {
-    console.log(error.message);
-  }
+  searchString = event.currentTarget.search.value.trim();
+  refs.loader.style.display = 'block';
+
+  getImages(searchString, 1)
+    .then(images => {
+      refreshOnSuccess(images);
+    })
+    .catch(error => {
+      refreshOnError(error);
+    });
 }
 
 function openModalWindow() {
@@ -107,14 +120,20 @@ function onBackdropClick(event) {
 function refreshOnError(msg) {
   refs.searchForm.search.value = '';
   refs.loader.style.display = 'none';
-  createErrMsg(msg);
+  //createErrMsg(msg);
+  console.log(msg);
   refs.gallery.style.backgroundColor = BGR_BODY;
-  refs.gallery.innerHTML = '';
+  galleryPagination && galleryPagination.refresh();
 }
 
 function refreshOnSuccess(data) {
   refs.searchForm.search.value = '';
   refs.loader.style.display = 'none';
   refs.gallery.style.backgroundColor = BGR_GALLERY;
-  createCardsGallery(data, refs.gallery);
+
+  galleryPagination && galleryPagination.refresh();
+
+  const maxPages = Math.ceil(data.totalHits / defaultElementsPerPage);
+  console.log(maxPages);
+  galleryPagination.addData(data.hits, maxPages, searchString);
 }
