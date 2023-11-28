@@ -139,10 +139,8 @@ class SliderInterface {
       if (i === this.#sliderRef.currentSlide) {
         children[i].classList.add(this.#dotActiveClass);
         children[i].style.display = 'flex';
-        console.log('qqq');
       } else {
         children[i].classList.remove(this.#dotActiveClass);
-        console.log('qqq1');
         children[i].style.display = window.innerWidth <= 375 ? 'none' : '';
       }
     }

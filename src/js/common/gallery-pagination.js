@@ -7,7 +7,7 @@ class GalleryPagination extends SliderInterface {
   #ContentRef;
   #fnGetImages;
   #moreBtn;
-  #maxPages = 1;
+  #maxPages = 0;
   #searchStr = '';
   #loader;
 
@@ -38,20 +38,17 @@ class GalleryPagination extends SliderInterface {
     this.#fnGetImages = fnGetImages;
     this.#ContentRef = contentRef;
     this.#elementsPerPage = elementsPerPage;
-    this.#maxPages = 1;
     this.#moreBtn = document.getElementById('morePageBtn');
     this.#moreBtn.addEventListener('click', this.onMoreBtnClick.bind(this));
     (this.#loader = document.querySelector('.border-loader-pagination')),
       (this.#searchStr = searchStr);
     this.update();
+    this.moreBtnUpdate();
   }
 
   moreBtnUpdate() {
     this.#moreBtn.style.display = this.#data.length > 0 ? 'block' : 'none';
-    console.log('moreBtnUpdate');
-    console.log(this.getSlidesNumber());
-    console.log(this.#maxPages);
-    this.#moreBtn.disabled = this.getSlidesNumber() === this.#maxPages;
+    this.#moreBtn.disabled = this.getSlidesNumber() == this.#maxPages;
   }
 
   refresh() {
@@ -79,8 +76,6 @@ class GalleryPagination extends SliderInterface {
     this.#maxPages = maxPages;
     super.addNewPage();
     this.moreBtnUpdate();
-
-    console.log('this.#maxPages', this.#maxPages);
   }
 
   onMoreBtnClick() {
@@ -90,7 +85,7 @@ class GalleryPagination extends SliderInterface {
     this.#fnGetImages(this.#searchStr, nextPage)
       .then(images => {
         this.addData(images.hits, this.#maxPages, this.#searchStr);
-        refs.loader.style.display = 'none';
+        this.#loader.style.display = 'none';
       })
       .catch(error => {
         console.log(error);

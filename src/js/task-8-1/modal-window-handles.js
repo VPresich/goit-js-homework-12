@@ -1,10 +1,8 @@
 import { KEY_CODE_ESC } from '../common/constants.js';
 
 import ModalWindowSlider from './modal-window-slider.js';
-
-import insertCardsToGallery from '../common/insert-cards-to-gallery.js'; //For callbacks
 import createCardsGallery from '../common/create-cards-gallery.js';
-import getImages from '../common/get-images.js'; // For promise
+import getImages from '../common/get-images.js';
 
 import { createErrMsg } from '../common/create-msg.js';
 import { BGR_GALLERY, BGR_BODY } from '../common/constants.js';
@@ -34,9 +32,8 @@ const galleryPagination = new GalleryPagination({
   data: [],
   fnCreateMarkup: createCardsGallery,
   fnGetImages: getImages,
-  isLastPage: false,
   contentRef: refs.gallery,
-  elementsPerPage: 20,
+  elementsPerPage: defaultElementsPerPage,
   searchStr: searchString,
 });
 
@@ -120,7 +117,7 @@ function onBackdropClick(event) {
 function refreshOnError(msg) {
   refs.searchForm.search.value = '';
   refs.loader.style.display = 'none';
-  //createErrMsg(msg);
+  createErrMsg(msg);
   console.log(msg);
   refs.gallery.style.backgroundColor = BGR_BODY;
   galleryPagination && galleryPagination.refresh();
@@ -134,6 +131,5 @@ function refreshOnSuccess(data) {
   galleryPagination && galleryPagination.refresh();
 
   const maxPages = Math.ceil(data.totalHits / defaultElementsPerPage);
-  console.log(maxPages);
   galleryPagination.addData(data.hits, maxPages, searchString);
 }
