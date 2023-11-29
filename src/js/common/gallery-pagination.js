@@ -1,8 +1,10 @@
 import SliderInterface from './slider-interface.js';
 import { createErrMsg } from '../common/create-msg.js';
+import scrollingDown from '../common/window-scrolling.js';
+import { DEF_ELEMENT_PERPAGE } from '../common/constants.js';
 
 class GalleryPagination extends SliderInterface {
-  #elementsPerPage = 20;
+  #elementsPerPage = DEF_ELEMENT_PERPAGE;
   #data;
   #fnUpdateMarkUp;
   #ContentRef;
@@ -51,7 +53,14 @@ class GalleryPagination extends SliderInterface {
 
   moreBtnUpdate() {
     this.#moreBtn.style.display = this.#data.length > 0 ? 'block' : 'none';
-    this.#moreBtn.disabled = this.getSlidesNumber() == this.#maxPages;
+    if (this.getSlidesNumber() === this.#maxPages) {
+      this.#moreBtn.style.display = 'none';
+      if (this.#maxPages > 1) {
+        createErrMsg(
+          "We're sorry, but you've reached the end of search results."
+        );
+      }
+    }
   }
 
   refresh() {
@@ -84,12 +93,13 @@ class GalleryPagination extends SliderInterface {
 
   onMoreBtnClick() {
     const nextPage = this.getSlidesNumber() + 1;
-
     this.#loader.style.display = 'block';
     this.#moreBtn.style.visible = 'none';
     this.#fnGetImages(this.#searchStr, nextPage)
       .then(images => {
         this.addData(images.hits, this.#maxPages, this.#searchStr);
+        window.scroll(0, 0);
+        scrollingDown(2);
       })
       .catch(error => {
         createErrMsg(error);

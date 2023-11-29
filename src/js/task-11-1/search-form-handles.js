@@ -8,9 +8,14 @@ import createCardsGallery from '../common/create-cards-gallery.js';
 import getImages from '../common/get-images.js';
 import { createErrMsg } from '../common/create-msg.js';
 
-import { BGR_GALLERY, BGR_BODY } from '../common/constants.js';
+import {
+  BGR_GALLERY,
+  BGR_BODY,
+  DEF_ELEMENT_PERPAGE,
+} from '../common/constants.js';
 
 import GalleryPagination from '../common/gallery-pagination.js';
+import scrollingDown from '../common/window-scrolling.js';
 
 const galleryRef = document.querySelector('.gallery');
 const loaderRef = document.querySelector('.border-loader');
@@ -19,7 +24,6 @@ const searchForm = document.querySelector('.search-form');
 searchForm.addEventListener('submit', onSearchFormSubmit);
 
 let searchString = '';
-const defaultElementsPerPage = 20;
 
 let slBox = new SimpleLightbox('.gallery a', {
   captionsData: 'alt',
@@ -50,7 +54,7 @@ const galleryPagination = new GalleryPagination({
   fnCreateMarkup: createCardsGallery,
   fnGetImages: getImages,
   contentRef: galleryRef,
-  elementsPerPage: defaultElementsPerPage,
+  elementsPerPage: DEF_ELEMENT_PERPAGE,
   searchStr: searchString,
   boxRef: slBox,
 });
@@ -80,7 +84,9 @@ function refreshOnError(msg) {
 function refreshOnSuccess(data) {
   galleryRef.style.backgroundColor = BGR_GALLERY;
   galleryPagination && galleryPagination.refresh();
-  const maxPages = Math.ceil(data.totalHits / defaultElementsPerPage);
+  const maxPages = Math.ceil(data.totalHits / DEF_ELEMENT_PERPAGE);
   galleryPagination.addData(data.hits, maxPages, searchString);
   slBox && slBox.refresh();
+  window.scroll(0, 0);
+  scrollingDown(2);
 }

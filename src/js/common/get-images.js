@@ -1,5 +1,5 @@
 import axiosData from './axios-data.js';
-import { API_KEY, API_URL } from '../common/constants.js';
+import { API_KEY, API_URL, DEF_ELEMENT_PERPAGE } from '../common/constants.js';
 
 async function getImages(strForSearch, pageNumber = 1) {
   const apiParams = {
@@ -9,7 +9,7 @@ async function getImages(strForSearch, pageNumber = 1) {
     orientation: 'horizontal',
     safesearch: true,
     page: pageNumber,
-    per_page: 20,
+    per_page: DEF_ELEMENT_PERPAGE,
   };
 
   const url = `${API_URL}?${new URLSearchParams(apiParams).toString()}`;

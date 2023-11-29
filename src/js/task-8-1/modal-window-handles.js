@@ -5,12 +5,16 @@ import createCardsGallery from '../common/create-cards-gallery.js';
 import getImages from '../common/get-images.js';
 
 import { createErrMsg } from '../common/create-msg.js';
-import { BGR_GALLERY, BGR_BODY } from '../common/constants.js';
+import {
+  BGR_GALLERY,
+  BGR_BODY,
+  DEF_ELEMENT_PERPAGE,
+} from '../common/constants.js';
 
 import GalleryPagination from '../common/gallery-pagination.js';
+import scrollingDown from '../common/window-scrolling.js';
 
 let searchString = '';
-const defaultElementsPerPage = 20;
 
 const refs = {
   gallery: document.querySelector('.gallery'),
@@ -33,7 +37,7 @@ const galleryPagination = new GalleryPagination({
   fnCreateMarkup: createCardsGallery,
   fnGetImages: getImages,
   contentRef: refs.gallery,
-  elementsPerPage: defaultElementsPerPage,
+  elementsPerPage: DEF_ELEMENT_PERPAGE,
   searchStr: searchString,
 });
 
@@ -129,6 +133,7 @@ function refreshOnSuccess(data) {
 
   galleryPagination && galleryPagination.refresh();
 
-  const maxPages = Math.ceil(data.totalHits / defaultElementsPerPage);
+  const maxPages = Math.ceil(data.totalHits / DEF_ELEMENT_PERPAGE);
   galleryPagination.addData(data.hits, maxPages, searchString);
+  scrollingDown(2);
 }
