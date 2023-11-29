@@ -87,4 +87,5 @@ function refreshOnSuccess(data) {
   const maxPages = Math.ceil(data.totalHits / DEF_ELEMENT_PERPAGE); 
   galleryPagination.addData(data.hits, maxPages, searchString);
   slBox && slBox.refresh();  
+  scrollingDown();
 }

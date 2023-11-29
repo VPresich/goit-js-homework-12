@@ -80,10 +80,7 @@ class GalleryPagination extends SliderInterface {
       startElement + this.#elementsPerPage
     );
     await this.#fnUpdateMarkUp(elements, this.#ContentRef);
-    this.#boxRef && this.#boxRef.refresh();
-
-    window.scroll(0, 0);
-    scrollingDown();
+    this.#boxRef && this.#boxRef.refresh();;
   }
 
   addData(newPageData, maxPages, searchStr) {
