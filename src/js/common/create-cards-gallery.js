@@ -37,7 +37,7 @@ function createCardsMarkup(cards) {
   return cards.map(cardMarkup).join('');
 }
 
-function createCadsGallery(cardsArray, galleryRef) {
+async function createCadsGallery(cardsArray, galleryRef) {
   const cardsMarkup = createCardsMarkup(cardsArray);
   galleryRef.innerHTML = '';
   galleryRef.insertAdjacentHTML('beforeend', cardsMarkup);

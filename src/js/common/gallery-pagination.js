@@ -72,15 +72,18 @@ class GalleryPagination extends SliderInterface {
     this.moreBtnUpdate();
   }
 
-  updateContent() {
+  async updateContent() {
     const slideNumber = super.getCurrentSlide();
     const startElement = slideNumber * this.#elementsPerPage;
     const elements = this.#data.slice(
       startElement,
       startElement + this.#elementsPerPage
     );
-    this.#fnUpdateMarkUp(elements, this.#ContentRef);
+    await this.#fnUpdateMarkUp(elements, this.#ContentRef);
     this.#boxRef && this.#boxRef.refresh();
+
+    window.scroll(0, 0);
+    scrollingDown();
   }
 
   addData(newPageData, maxPages, searchStr) {
@@ -98,12 +101,13 @@ class GalleryPagination extends SliderInterface {
     this.#fnGetImages(this.#searchStr, nextPage)
       .then(images => {
         this.addData(images.hits, this.#maxPages, this.#searchStr);
+
         window.scroll(0, 0);
-        scrollingDown(2);
+        scrollingDown();
       })
       .catch(error => {
         createErrMsg(error);
-        this.refresh();
+        this.#moreBtn.style.display = 'none';
       })
       .finally(() => {
         this.#loader.style.display = 'none';

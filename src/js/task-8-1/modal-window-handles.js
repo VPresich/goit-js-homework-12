@@ -121,7 +121,7 @@ function onBackdropClick(event) {
 function refreshOnError(msg) {
   refs.searchForm.search.value = '';
   refs.loader.style.display = 'none';
-  createErrMsg(msg);
+  createErrMsg(msg); 
   refs.gallery.style.backgroundColor = BGR_BODY;
   galleryPagination && galleryPagination.refresh();
 }
@@ -135,5 +135,5 @@ function refreshOnSuccess(data) {
 
   const maxPages = Math.ceil(data.totalHits / DEF_ELEMENT_PERPAGE);
   galleryPagination.addData(data.hits, maxPages, searchString);
-  scrollingDown(2);
+  scrollingDown();
 }

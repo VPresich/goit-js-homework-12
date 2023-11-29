@@ -84,9 +84,7 @@ function refreshOnError(msg) {
 function refreshOnSuccess(data) {
   galleryRef.style.backgroundColor = BGR_GALLERY;
   galleryPagination && galleryPagination.refresh();
-  const maxPages = Math.ceil(data.totalHits / DEF_ELEMENT_PERPAGE);
+  const maxPages = Math.ceil(data.totalHits / DEF_ELEMENT_PERPAGE); 
   galleryPagination.addData(data.hits, maxPages, searchString);
-  slBox && slBox.refresh();
-  window.scroll(0, 0);
-  scrollingDown(2);
+  slBox && slBox.refresh();  
 }

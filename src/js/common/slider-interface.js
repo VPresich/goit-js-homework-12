@@ -120,7 +120,7 @@ class SliderInterface {
     );
   }
 
-  updateContent() {
+  async updateContent() {
     console.log(TODO in children);
   }
 
