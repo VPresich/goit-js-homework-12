@@ -1,6 +1,5 @@
 import SliderInterface from './slider-interface.js';
 import { createErrMsg } from '../common/create-msg.js';
-import scrollingDown from '../common/window-scrolling.js';
 import { DEF_ELEMENT_PERPAGE } from '../common/constants.js';
 
 class GalleryPagination extends SliderInterface {
@@ -67,8 +66,8 @@ class GalleryPagination extends SliderInterface {
     super.refresh();
     this.#searchStr = '';
     this.#data = [];
-    this.update();
     this.#ContentRef.innerHTML = '';
+    this.update();
     this.moreBtnUpdate();
   }
 
@@ -80,7 +79,7 @@ class GalleryPagination extends SliderInterface {
       startElement + this.#elementsPerPage
     );
     await this.#fnUpdateMarkUp(elements, this.#ContentRef);
-    this.#boxRef && this.#boxRef.refresh();;
+    this.#boxRef && this.#boxRef.refresh();
   }
 
   addData(newPageData, maxPages, searchStr) {
@@ -98,9 +97,6 @@ class GalleryPagination extends SliderInterface {
     this.#fnGetImages(this.#searchStr, nextPage)
       .then(images => {
         this.addData(images.hits, this.#maxPages, this.#searchStr);
-
-        window.scroll(0, 0);
-        scrollingDown();
       })
       .catch(error => {
         createErrMsg(error);

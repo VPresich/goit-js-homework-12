@@ -15,7 +15,6 @@ import {
 } from '../common/constants.js';
 
 import GalleryPagination from '../common/gallery-pagination.js';
-import scrollingDown from '../common/window-scrolling.js';
 
 const galleryRef = document.querySelector('.gallery');
 const loaderRef = document.querySelector('.border-loader');
@@ -84,8 +83,7 @@ function refreshOnError(msg) {
 function refreshOnSuccess(data) {
   galleryRef.style.backgroundColor = BGR_GALLERY;
   galleryPagination && galleryPagination.refresh();
-  const maxPages = Math.ceil(data.totalHits / DEF_ELEMENT_PERPAGE); 
+  const maxPages = Math.ceil(data.totalHits / DEF_ELEMENT_PERPAGE);
   galleryPagination.addData(data.hits, maxPages, searchString);
-  slBox && slBox.refresh();  
-  scrollingDown();
+  slBox && slBox.refresh();
 }

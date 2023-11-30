@@ -93,8 +93,9 @@
 @media screen and (min-width: 678px) {
   .slider-dots {
     display: flex;
-    justify-content: center;
-    margin-top: 10px;
+    max-width: 500px;
+    flex-wrap: wrap;
+    row-gap: 8px;
   }
 
   .slider-button {
@@ -106,6 +107,11 @@
   .slider-button {
     width: 100px;
     height: 36px;
+  }
+
+  .slider-dots {
+    max-width: 600px;
+    flex-wrap: wrap;
   }
 
   .slider-buttons {

@@ -1,3 +1,5 @@
+import scrollingDown from './window-scrolling.js';
+
 const cardMarkup = card => {
   const { largeImageURL, previewURL, tags, likes, views, comments, downloads } =
     card;
@@ -38,9 +40,17 @@ function createCardsMarkup(cards) {
 }
 
 async function createCadsGallery(cardsArray, galleryRef) {
-  const cardsMarkup = createCardsMarkup(cardsArray);
-  galleryRef.innerHTML = '';
-  galleryRef.insertAdjacentHTML('beforeend', cardsMarkup);
+  try {
+    document.body.style.cursor = 'none';
+    const cardsMarkup = createCardsMarkup(cardsArray);
+    galleryRef.innerHTML = '';
+    galleryRef.insertAdjacentHTML('beforeend', cardsMarkup);
+    scrollingDown();
+  } catch (error) {
+    console.log(error);
+  } finally {
+    document.body.style.cursor = 'default';
+  }
 }
 
 export { createCardsMarkup };

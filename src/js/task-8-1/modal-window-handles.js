@@ -12,7 +12,6 @@ import {
 } from '../common/constants.js';
 
 import GalleryPagination from '../common/gallery-pagination.js';
-import scrollingDown from '../common/window-scrolling.js';
 
 let searchString = '';
 
@@ -92,6 +91,10 @@ function onSearchFormSubmit(event) {
     })
     .catch(error => {
       refreshOnError(error);
+    })
+    .finally(() => {
+      refs.searchForm.search.value = '';
+      refs.loader.style.display = 'none';
     });
 }
 
@@ -119,21 +122,16 @@ function onBackdropClick(event) {
 }
 
 function refreshOnError(msg) {
-  refs.searchForm.search.value = '';
-  refs.loader.style.display = 'none';
-  createErrMsg(msg); 
+  createErrMsg(msg);
   refs.gallery.style.backgroundColor = BGR_BODY;
   galleryPagination && galleryPagination.refresh();
 }
 
 function refreshOnSuccess(data) {
-  refs.searchForm.search.value = '';
-  refs.loader.style.display = 'none';
   refs.gallery.style.backgroundColor = BGR_GALLERY;
 
   galleryPagination && galleryPagination.refresh();
 
   const maxPages = Math.ceil(data.totalHits / DEF_ELEMENT_PERPAGE);
   galleryPagination.addData(data.hits, maxPages, searchString);
-  scrollingDown();
 }
